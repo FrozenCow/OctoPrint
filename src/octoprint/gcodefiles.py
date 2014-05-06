@@ -179,7 +179,7 @@ class GcodeManager:
 			return None, True
 
 		curaEnabled = self._settings.getBoolean(["cura", "enabled"])
-		filename = file.filename
+		filename = self.normalizeFilename(file.filename)
 
 		absolutePath = self.getAbsolutePath(filename, mustExist=False)
 		gcode = isGcodeFileName(filename)
@@ -275,6 +275,10 @@ class GcodeManager:
 			del self._metadata[filename]
 			self._metadataDirty = True
 			self._saveMetadata()
+
+	def normalizeFilename(self, filename):
+		name, extension = os.path.splitext(filename)
+		return name+extension.lower()
 
 	def getAbsolutePath(self, filename, mustExist=True):
 		"""
