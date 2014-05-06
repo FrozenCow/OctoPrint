@@ -21,6 +21,7 @@ ajax = Blueprint("ajax", __name__)
 
 from . import control as ajax_control
 from . import gcodefiles as ajax_gcodefiles
+from . import stlfiles as ajax_stlfiles
 from . import settings as ajax_settings
 from . import timelapse as ajax_timelapse
 from . import users as ajax_users

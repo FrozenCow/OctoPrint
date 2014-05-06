@@ -148,6 +148,35 @@ function GcodeFilesViewModel(printerStateViewModel, loginStateViewModel) {
         })
     }
 
+    self.viewFile = function(filename) {
+        var file = self.listHelper.getItem(function(item) {return item.name == filename});
+        if (!file) return;
+
+        var dialog = document.createElement('div');
+        dialog.style.backgroundColor = 'red';
+        dialog.style.left = '50%';
+        dialog.style.top = '50%';
+        dialog.style.width = '800px';
+        dialog.style.height = '600px';
+        dialog.style.marginLeft = '-400px';
+        dialog.style.marginTop = '-300px';
+        dialog.style.position = 'fixed';
+        var thingiviewElement = document.createElement('div');
+        thingiviewElement.style.width = '800px';
+        thingiviewElement.style.height = '600px';
+        thingiviewElement.id = 'thingiview';
+        dialog.appendChild(thingiviewElement);
+        document.body.appendChild(dialog);
+
+        thingiurlbase = "/static/js/lib";
+        var stlfilename = filename.replace(/\.\w+$/,'.stl');
+        console.log(stlfilename);
+        var thingiview = new Thingiview(thingiviewElement.id)
+        thingiview.setObjectColor('#C0D8F0');
+        thingiview.initScene();
+        thingiview.loadSTL('/ajax/stlfiles/'+stlfilename);
+    }
+
     self.initSdCard = function() {
         self._sendSdCommand("init");
     }
